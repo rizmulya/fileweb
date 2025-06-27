@@ -17,6 +17,7 @@ a lightweight and fast `web-based file sharing` built with `React` and `Golang`.
 setup :
 - set base url at `frontend/src/const.jsx`
 - create password with `htpasswd -c .htpasswd yourusername`
+- set sharing/accessable directory at `docker-compose.yml`
 - build react `npm run build`
 - run docker `docker-compose up --build -d`
 
