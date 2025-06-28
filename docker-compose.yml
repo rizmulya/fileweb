@@ -1,23 +1,47 @@
 services:
-  golang_api:
-    container_name: golang_api
-    build:
-      context: ./backend
+  fileweb_backend:
+    build: ./backend
+    image: fileweb_backend:1.0.0
+    container_name: fileweb_backend
     volumes:
       - ./sharing:/data # accessable dir
     expose:
-      - "8080"  # internal docker only
+      - "8080"
+    networks:
+      - fileweb_net
     restart: unless-stopped
 
-  nginx:
-    image: nginx:alpine
-    container_name: frontend
+  fileweb_frontend:
+    build: ./frontend
+    image: fileweb_frontend:1.0.0
+    container_name: fileweb_frontend
+    command: ["npm", "run", "build"]
+    volumes:
+      - ./frontend:/app/frontend
+      - frontend_node_modules:/app/frontend/node_modules
+    networks:
+      - fileweb_net
+
+  fileweb_nginx:
+    build: ./nginx
+    image: fileweb_nginx:1.0.0
+    container_name: fileweb_nginx
     volumes:
       - ./frontend/dist:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./.htpasswd:/etc/nginx/.htpasswd:ro # Nginx basic auth
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro # Nginx basic auth
     ports:
-      - "80:80"  # open to host
+      - "80:80" 
     depends_on:
-      - golang_api
+      - fileweb_backend
+    networks:
+      - fileweb_net
     restart: unless-stopped
+
+networks:
+  fileweb_net:
+    name: fileweb_net
+    driver: bridge
+
+volumes:
+  frontend_node_modules:
