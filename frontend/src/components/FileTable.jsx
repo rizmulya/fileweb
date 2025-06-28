@@ -315,10 +315,10 @@ export default function FileTable({
                           if (e.key === 'Enter') inputRef.current.blur();
                         }}
                         onClick={(e) => e.stopPropagation()} // ⛔ cegah trigger td
-                        className="bg-transparent border-b border-blue-500 focus:outline-none font-medium w-full text-blue-600 dark:text-blue-300"
+                        className="bg-transparent border-b border-blue-500 focus:outline-none w-full text-blue-600 dark:text-blue-300"
                       />
                     ) : (
-                      <span className="w-full text-left font-medium">
+                      <span className="w-full text-left">
                         {limitStr(entry.name)}
                       </span>
                     )}
