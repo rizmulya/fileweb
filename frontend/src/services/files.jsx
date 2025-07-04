@@ -10,6 +10,7 @@ export const writeFile =  async (
   try {
     const res = await fetch(API_WRITE_FILE, {
       method: 'POST',
+      credentials: "include", 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ path, content }),
     });
@@ -34,7 +35,9 @@ export const getPlainTextFileContent = async (
     onError = () => {},
 ) => {
     try {
-        const res = await fetch(`${API_RAW}?path=${encodeURIComponent(path)}`);
+        const res = await fetch(`${API_RAW}?path=${encodeURIComponent(path)}`, {
+          credentials: "include", 
+        });
         const text = await res.text().catch(() => '');
 
         if (!res.ok) {
@@ -99,6 +102,7 @@ export const createDir =  async (
   try {
     const res = await fetch(api, {
         method: 'POST',
+        credentials: "include", 
         headers: {
             'Content-Type': 'application/json',
         },
@@ -128,6 +132,7 @@ export const downloadZip =  async (
   try {
     const res = await fetch(API_ZIP_DOWNLOAD, {
         method: 'POST',
+        credentials: "include", 
         headers: {
             'Content-Type': 'application/json'
         },
@@ -177,7 +182,9 @@ export const getListDir =  async (
     onError = () => {},
 ) => {
   try {
-    const res = await fetch(`${API_LS}?path=${newPath}`);
+    const res = await fetch(`${API_LS}?path=${newPath}`, {
+      credentials: "include",
+    });
 
     const data = await res.json().catch(() => ({}));
 
@@ -201,6 +208,7 @@ export const deleteFiles =  async (
   try {
     const res = await fetch(API_DELETE, {
       method: 'POST',
+      credentials: "include", 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ paths }),
     });

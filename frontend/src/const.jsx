@@ -1,5 +1,14 @@
 
-const BASE_URL = 'http://192.168.8.133';
+const DEFAULT_BASE_URL = 'http://localhost';
+
+const BASE_URL = (() => {
+  let url = localStorage.getItem('BASE_URL');
+  if (!url) {
+    url = DEFAULT_BASE_URL;
+    localStorage.setItem('BASE_URL', url);
+  }
+  return url;
+})();
 
 export const API_DELETE = BASE_URL + "/api/deletes";
 export const API_LS = BASE_URL + "/api/ls";
